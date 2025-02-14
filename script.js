@@ -1,29 +1,29 @@
-function manipulateData() {
-            // Step 1: Return a promise that resolves after 3 seconds with the array [1, 2, 3, 4]
+ function manipulateData() {
+            // Initial Promise: Resolve faster (1s instead of 3s)
             new Promise((resolve) => {
-                setTimeout(() => resolve([1, 2, 3, 4]), 3000);
+                setTimeout(() => resolve([1, 2, 3, 4]), 1000);
             })
-            // Step 2: First Transformation - Filter out odd numbers
+            // Step 1: Filter out odd numbers
             .then((arr) => {
                 return new Promise((resolve) => {
                     setTimeout(() => {
                         const evens = arr.filter(num => num % 2 === 0);
                         document.getElementById("output").textContent = evens.join(", ");
                         resolve(evens);
-                    }, 1000);
+                    }, 1000); // Cypress will see "2,4" at 2s
                 });
             })
-            // Step 3: Second Transformation - Multiply even numbers by 2
+            // Step 2: Multiply even numbers by 2
             .then((evens) => {
                 return new Promise((resolve) => {
                     setTimeout(() => {
                         const doubled = evens.map(num => num * 2);
                         document.getElementById("output").textContent = doubled.join(", ");
                         resolve(doubled);
-                    }, 2000);
+                    }, 1000); // Cypress will see "4,8" at 3s
                 });
             });
         }
 
-        // Call the function when the page loads
+        // Call function on page load
         manipulateData();
